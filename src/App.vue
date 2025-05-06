@@ -6,9 +6,16 @@ const newTask = ref('');
 
 const addTask = () => {
   if (newTask.value.trim() !== '') {
-    tasks.value.push({ text: newTask.value, completed: false });
+    tasks.value.push({ 
+      id: Date.now(),
+      text: newTask.value, 
+      completed: false });
     newTask.value = '';
   }
+};
+
+const removeTask = (task) => {
+  tasks.value = tasks.value.filter(t => t.id !== task.id);
 };
 
 </script>
@@ -21,6 +28,7 @@ const addTask = () => {
     <ul>
       <li v-for="task in tasks" :key="task.id">
         {{ task.text }}
+        <button @click="removeTask(task)">Remove</button>
       </li>
     </ul>
   </div>
